@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TinyLink</title>
+</head>
+<body>
+    <h1>TinyLink URL Shortener</h1>
+    <input type="text" id="urlInput" placeholder="Enter long URL here">
+    <button onclick="shortenUrl()">Shorten</button>
+    <p id="result"></p>
+
+    <script>
+        async function shortenUrl() {
+            const longUrl = document.getElementById('urlInput').value;
+            
+            // Call our Backend API
+            const response = await fetch('/shorten', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: longUrl })
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerHTML = 
+                `Short link: <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+        }
+    </script>
+</body>
+</html>
